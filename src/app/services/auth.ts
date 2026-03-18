@@ -1,54 +1,48 @@
 import { Injectable } from '@angular/core';
 import { RoleEnum } from "../models/role.model";
-
-interface MockUser {
-  username: string;
-  password: string;
-  role: RoleEnum;
-}
+import { LoginRequest, User } from '../models/user.model';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class Auth {
-  private readonly MOCK_USERS: MockUser[] = [
-    {username: "admin", password: "admin", role: RoleEnum.ADMIN},
-    {username: "vet", password: "vet", role: RoleEnum.VET},
-    {username: "owner", password: "owner", role: RoleEnum.OWNER}
-  ];
+  private readonly API_URL = "http://localhost:8080/api/auth"
+  private currentUser: User | null = null;
 
-  private currentRole: RoleEnum | null = null;
+  constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): boolean {
-    const user = this.MOCK_USERS.find(
-      u => u.username === username && u.password === password
+  login(personalCode: string, password: string,roleType?: RoleEnum): Observable<User> {
+    const body: LoginRequest = { personalCode, password, roleType };
+    return this.http.post<User>(`${this.API_URL}/login`, body).pipe(
+      tap(user => {
+        this.currentUser = user;
+        localStorage.setItem("user", JSON.stringify(user));
+      })
     );
+  } 
 
-    if(user) {
-      this.currentRole = user.role;
-      localStorage.setItem("role", user.role);
-      return true;
-    }
-
-    return false;
+  register(data: any): Observable<void> {
+    return this.http.post<void>(`${this.API_URL}/register`, data);
   }
 
   logout(): void {
-    this.currentRole = null;
-    localStorage.removeItem("role");
+    this.currentUser = null;
+    localStorage.removeItem("user");
   }
 
-  getRole(): RoleEnum | null {
-    return this.currentRole ?? localStorage.getItem("role") as RoleEnum | null;
+  getCurrentUser(): User | null {
+    return this.currentUser ?? JSON.parse(localStorage.getItem("user") || "null");
   }
 
   isLoggedIn(): boolean {
-    return this.getRole() !== null;
+    return this.getCurrentUser() !== null;
   }
-  // Check if the user has correct role 
+  // Check if a user and role exists, and if they do, then check against existing roles
   hasRole(role: RoleEnum): boolean {
-    return this.getRole() === role;
+    const user = this.getCurrentUser();
+    return user?.roles?.some(r => r.name === role) ?? false;
   }
 
 }
