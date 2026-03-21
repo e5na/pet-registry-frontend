@@ -1,0 +1,55 @@
+<div class="dashboard-container">
+  <nav class="navbar">
+    <h1>REMITK</h1>
+    <div class="nav-right">
+      <span>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
+      <button (click)="logout()">Logi välja</button>
+    </div>
+  </nav>
+
+  <div class="content">
+
+    <!-- Role selector, only show if user has multiple roles -->
+    <div class="role-selector" *ngIf="currentUser?.roles && currentUser!.roles.length > 1">
+      <h3>Vali roll</h3>
+      <div class="role-buttons">
+        <button
+          *ngFor="let role of currentUser!.roles"
+          [class.active]="activeRole === role.name"
+          (click)="setRole(role.name)">
+          {{ role.name }}
+        </button>
+      </div>
+    </div>
+
+    <!-- ADMIN section -->
+    <div *ngIf="activeRole === RoleEnum.ADMIN">
+      <h2>Admin paneel</h2>
+      <div class="cards">
+        <div class="card">Kasutajate haldus</div>
+        <div class="card">Mikrokiipide haldus</div>
+        <div class="card">Tõugude haldus</div>
+      </div>
+    </div>
+
+    <!-- VET section -->
+    <div *ngIf="activeRole === RoleEnum.VET">
+      <h2>Veterinaari paneel</h2>
+      <div class="cards">
+        <div class="card">Loomade nimekiri</div>
+        <div class="card">Terviseandmed</div>
+      </div>
+    </div>
+
+    <!-- OWNER section -->
+    <div *ngIf="activeRole === RoleEnum.OWNER">
+      <h2>Minu lemmikloomad</h2>
+      <div class="cards">
+        <div class="card">Minu loomad</div>
+        <div class="card">Registreeri uus loom</div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
