@@ -14,7 +14,7 @@ export class Auth {
   constructor(private http: HttpClient) {}
 
   login(personalCode: string, password: string): Observable<User> {
-    const credentials = btoa(`${personalCode}:${password}`);
+    const credentials = btoa(`${personalCode.trim()}:${password.trim()}`);
     const headers = new HttpHeaders({
       'Authorization': `Basic ${credentials}`
     });
@@ -24,6 +24,10 @@ export class Auth {
         this.currentUser = user;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('credentials', credentials);
+        // Save first role as active role
+        if (user.roles && user.roles.length > 0) {
+          localStorage.setItem('activeRole', user.roles[0].name);
+        }
       })
     );
   }
@@ -50,4 +54,13 @@ export class Auth {
     const user = this.getCurrentUser();
     return user?.roles?.some(r => r.name === role) ?? false;
   }
+
+  getCredentials(): string | null {
+    return localStorage.getItem('credentials');
+  }
+
+  getActiveRole(): string | null {
+    return localStorage.getItem('activeRole');
+  }
+
 }
