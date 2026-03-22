@@ -1,5 +1,5 @@
 
-import { Role, RoleEnum } from "./role.model";
+import { Role } from "./role.model";
 
 export interface User {
     id: number;
@@ -28,10 +28,4 @@ export interface UpdateUserRequest {
     email?: string;
     phoneNumber?: string;
     address?: string;
-}
-
-export interface LoginRequest {
-  personalCode: string;
-  password: string;
-  roleType?: RoleEnum;
 }
