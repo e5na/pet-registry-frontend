@@ -42,6 +42,11 @@ export class Auth {
     return this.currentUser ?? JSON.parse(localStorage.getItem('user') || 'null');
   }
 
+  getCurrentUserId(): number | null {
+    const user = this.getCurrentUser();
+    return user ? user.id : null;
+  }
+
   isLoggedIn(): boolean {
     return this.getCurrentUser() !== null;
   }
