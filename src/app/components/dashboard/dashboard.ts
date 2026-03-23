@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Auth } from '../../services/auth';
 import { RoleEnum } from '../../models/role.model';
 import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterOutlet],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
@@ -24,6 +24,11 @@ export class Dashboard {
     if (this.currentUser?.roles?.length === 1) {
       this.activeRole = this.currentUser.roles[0].name;
     }
+  }
+
+  isMainDashboard(): boolean {
+    // Kui URL on täpselt '/dashboard', siis näitame paneele
+    return this.router.url === '/dashboard';
   }
 
   setRole(role: RoleEnum): void {
