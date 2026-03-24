@@ -66,7 +66,7 @@ src/app/
 ├── guards/
 │   └── auth-guard.ts                     # Protects dashboard routes from unauthenticated users
 ├── interceptors/
-│   └── auth.interceptor.ts               # Attaches JWT token to all outgoing requests
+│   └── auth.interceptor.ts               # Active role is sent with each request via the `X-Active-Role` header
 └── models/
     ├── pet.model.ts
     ├── breed.model.ts
@@ -102,7 +102,7 @@ src/app/
 
 ### Authentication
 - Login with personal code and password
-- JWT token is stored and automatically attached to all API requests via HTTP interceptor
+- Basic Auth credentials are stored and automatically attached to all API requests via HTTP interceptor
 - Auth guard protects all dashboard routes — unauthenticated users are redirected to `/login`
 
 ### Ownership Transfer
