@@ -6,6 +6,7 @@ import { Login } from './components/login/login';
 import { MicrochipComponent } from './components/add-microchip/add-microchip';
 import { PetList } from './components/pets/pet-list/pet-list';
 import { UserFormComponent } from './components/user-form/user-form';
+import { PetTransferComponent } from './components/pet-transfer/pet-transfer';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,6 +20,7 @@ export const routes: Routes = [
       { path: 'pets/new', component: PetFormComponent }, // Vormi vaade
       { path: 'microchips/new', component: MicrochipComponent },
       { path: 'pets', component: PetList },
+      { path: 'ownership-transfer/:petId', component: PetTransferComponent },
     ],
   },
 ];
