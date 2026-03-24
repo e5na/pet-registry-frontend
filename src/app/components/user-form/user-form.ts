@@ -26,7 +26,7 @@ export class UserFormComponent {
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       address: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9+ ]{7,15}$')]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9+]{7,15}$')]],
       password: ['', Validators.required],
     });
   }
