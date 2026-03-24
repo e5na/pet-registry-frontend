@@ -1,0 +1,136 @@
+<div class="form-page-wrapper">
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Kasutaja registreerimine</h2>
+      <p>Palun täitke kõik vajalikud väljad.</p>
+    </div>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="nice-form">
+      <div
+        class="form-group"
+        [class.has-error]="
+          userForm.get('personalCode')?.touched && userForm.get('personalCode')?.invalid
+        "
+      >
+        <label for="personalCode">Isikukood</label>
+        <input
+          id="personalCode"
+          formControlName="personalCode"
+          placeholder="6010101XXXX"
+          maxlength="11"
+        />
+        <div
+          class="error-feedback"
+          *ngIf="userForm.get('personalCode')?.touched && userForm.get('personalCode')?.invalid"
+        >
+          <small *ngIf="userForm.get('personalCode')?.hasError('alreadyExists')">
+            ⚠️ See isikukood on juba registreeritud!
+          </small>
+
+          <small
+            *ngIf="
+              !userForm.get('personalCode')?.hasError('alreadyExists') &&
+              (userForm.get('personalCode')?.hasError('required') ||
+                userForm.get('personalCode')?.hasError('pattern'))
+            "
+          >
+            Sisestage korrektne 11-kohaline isikukood.
+          </small>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="userForm.get('firstName')?.touched && userForm.get('firstName')?.invalid"
+      >
+        <label for="fullName">Eesnimi</label>
+        <input id="firstName" formControlName="firstName" placeholder="Mari" />
+        <div
+          class="error-feedback"
+          *ngIf="userForm.get('firstName')?.touched && userForm.get('firstName')?.invalid"
+        >
+          <small>Eesnimi on kohustuslik (vähemalt 3 tähte).</small>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="userForm.get('lastName')?.touched && userForm.get('lastName')?.invalid"
+      >
+        <label for="lastName">Perekonnanimi</label>
+        <input id="lastName" formControlName="lastName" placeholder="Maasikas" />
+        <div
+          class="error-feedback"
+          *ngIf="userForm.get('lastName')?.touched && userForm.get('lastName')?.invalid"
+        >
+          <small>Perekonnanimi on kohustuslik (vähemalt 3 tähte).</small>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="userForm.get('address')?.touched && userForm.get('address')?.invalid"
+      >
+        <label for="address">Elukoha aadress</label>
+        <input id="address" formControlName="address" placeholder="Lille tn 1, Tartu" />
+        <div
+          class="error-feedback"
+          *ngIf="userForm.get('address')?.touched && userForm.get('address')?.invalid"
+        >
+          <small>Aadress on kohustuslik.</small>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="userForm.get('email')?.touched && userForm.get('email')?.invalid"
+      >
+        <label for="email">E-posti aadress</label>
+        <input id="email" formControlName="email" type="email" placeholder="mari@näide.ee" />
+        <div
+          class="error-feedback"
+          *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid"
+        >
+          <small>Palun sisestage korrektne e-posti aadress.</small>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="
+          userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.invalid
+        "
+      >
+        <label for="phoneNumber">Telefoninumber</label>
+        <input id="phoneNumber" formControlName="phoneNumber" placeholder="+372 5555 555" />
+        <div
+          class="error-feedback"
+          *ngIf="userForm.get('phoneNumber')?.touched && userForm.get('phoneNumber')?.invalid"
+        >
+          <small>Sisestage korrektne telefoninumber.</small>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="userForm.get('password')?.touched && userForm.get('password')?.invalid"
+      >
+        <label for="password">Parool</label>
+        <input id="password" formControlName="password" placeholder="" type="password" />
+        <div
+          class="error-feedback"
+          *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid"
+        >
+          <small>Parool on kohustuslik.</small>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="userForm.invalid" class="submit-btn">👤 Loo konto</button>
+        <button type="button" routerLink="/login" class="back-link-btn">
+          Tagasi sisselogimise juurde
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
