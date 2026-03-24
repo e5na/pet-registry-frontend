@@ -14,9 +14,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (credentials && activeRole) {
     const authReq = req.clone({
       setHeaders: {
-        'Authorization': `Basic ${credentials}`,
-        'X-Active-Role': activeRole
-      }
+        Authorization: `Basic ${credentials}`,
+        'X-Active-Role': activeRole,
+      },
     });
     return next(authReq);
   }

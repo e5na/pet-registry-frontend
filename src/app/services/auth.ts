@@ -16,11 +16,11 @@ export class Auth {
   login(personalCode: string, password: string): Observable<User> {
     const credentials = btoa(`${personalCode.trim()}:${password.trim()}`);
     const headers = new HttpHeaders({
-      'Authorization': `Basic ${credentials}`
+      Authorization: `Basic ${credentials}`,
     });
 
     return this.http.post<User>(`${this.API_URL}/login`, null, { headers }).pipe(
-      tap(user => {
+      tap((user) => {
         this.currentUser = user;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('credentials', credentials);
@@ -28,7 +28,7 @@ export class Auth {
         if (user.roles && user.roles.length > 0) {
           localStorage.setItem('activeRole', user.roles[0].name);
         }
-      })
+      }),
     );
   }
 
@@ -46,15 +46,6 @@ export class Auth {
     return this.currentUser ?? JSON.parse(localStorage.getItem('user') || 'null');
   }
 
-  isLoggedIn(): boolean {
-    return this.getCurrentUser() !== null;
-  }
-
-  hasRole(role: RoleEnum): boolean {
-    const user = this.getCurrentUser();
-    return user?.roles?.some(r => r.name === role) ?? false;
-  }
-
   getCredentials(): string | null {
     return localStorage.getItem('credentials');
   }
@@ -63,4 +54,17 @@ export class Auth {
     return localStorage.getItem('activeRole');
   }
 
+  getCurrentUserId(): number | null {
+    const user = this.getCurrentUser();
+    return user ? user.id : null;
+  }
+
+  isLoggedIn(): boolean {
+    return this.getCurrentUser() !== null;
+  }
+
+  hasRole(role: RoleEnum): boolean {
+    const user = this.getCurrentUser();
+    return user?.roles?.some((r) => r.name === role) ?? false;
+  }
 }
