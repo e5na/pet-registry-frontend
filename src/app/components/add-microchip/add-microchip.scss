@@ -4,8 +4,23 @@
   width: 100%; // Lisa laiuse kontroll
   padding: 2.5rem;
   background-color: #ffffff;
-  border-radius: 8px; 
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  padding: 0.4rem 1rem;
+  background-color: #003580;
+  color: white;
+  border: 1px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #002560;
+  }
 }
 
 .form-header {

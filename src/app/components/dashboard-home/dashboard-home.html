@@ -25,12 +25,14 @@
     <h2>Veterinaari paneel</h2>
     <div class="cards">
       <div class="card">Loomade nimekiri</div>
+      <div class="card" routerLink="/dashboard/microchips/new">Mikrokiipide haldus</div>
+      <div class="card action-card" routerLink="/dashboard/pets/new">Registreeri uus loom</div>
       <div class="card">Terviseandmed</div>
     </div>
   </div>
 
   <div class="section" *ngIf="activeRole === RoleEnum.OWNER">
-    <h2>Minu lemmikloomad</h2>
+    <h2>Omaniku paneel</h2>
     <div class="cards">
       <div class="card" routerLink="/dashboard/pets">Minu loomad</div>
     </div>

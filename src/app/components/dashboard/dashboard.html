@@ -3,6 +3,7 @@
     <h1>REMITK</h1>
     <div class="nav-right">
       <span>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</span>
+      <button *ngIf="showBackButton" (click)="goBack()" class="back-btn">⬅ Tagasi</button>
       <button (click)="logout()">Logi välja</button>
     </div>
   </nav>
