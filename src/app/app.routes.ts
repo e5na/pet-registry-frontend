@@ -7,6 +7,7 @@ import { MicrochipComponent } from './components/add-microchip/add-microchip';
 import { PetList } from './components/pets/pet-list/pet-list';
 import { UserFormComponent } from './components/user-form/user-form';
 import { PetTransferComponent } from './components/pet-transfer/pet-transfer';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: Dashboard,
+    canActivate: [authGuard],
     children: [
       { path: '', component: DashboardHomeComponent }, // Vaikimisi vaade
       { path: 'pets/new', component: PetFormComponent }, // Vormi vaade
