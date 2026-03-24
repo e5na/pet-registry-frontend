@@ -1,0 +1,17 @@
+<div class="pet-grid">
+  <div *ngFor="let pet of pets" class="pet-card">
+    <div class="card-header">
+      <h3>
+        {{ pet.name }} <span>({{ pet.sex === 'M' ? 'Isane' : 'Emane' }})</span>
+      </h3>
+      <span class="status-badge" [class.lost]="pet.status === 'LOST'">
+        {{ pet.status === 'ACTIVE' ? 'Aktiivne' : 'KADUNUD' }}
+      </span>
+    </div>
+
+    <div class="card-body">
+      <p><strong>Sünniaeg:</strong> {{ pet.birthDate | date: 'dd.MM.yyyy' }}</p>
+      <p><strong>Värvus:</strong> {{ pet.color }}</p>
+    </div>
+  </div>
+</div>
