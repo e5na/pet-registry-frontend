@@ -51,4 +51,12 @@ export class PetList implements OnInit {
     console.log('expandedPetId:', this.expandedPetId);
     this.cdr.detectChanges();
   }
+
+  transferPet(event: Event, petId: number): void {
+    event.stopPropagation();
+    this.router.navigate(['/ownership-transfer', petId]);
+  }
+
+
+
 }

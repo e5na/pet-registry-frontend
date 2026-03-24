@@ -1,0 +1,77 @@
+<div class="pet-transfer-container">
+  <nav class="navbar">
+    <h1>Riiklik Lemmikloomaregister</h1>
+    <button (click)="goBack()">← Tagasi</button>
+  </nav>
+
+  <div class="content">
+    <h2>Omanikuvahetus</h2>
+
+    <div class="transfer-panel">
+
+      <ng-container *ngIf="!activeTransfer">
+        <div class="form-group">
+          <label for="newOwnerId">Uue omaniku kasutaja ID</label>
+          <input
+            id="newOwnerId"
+            type="number"
+            [(ngModel)]="newOwnerId"
+            placeholder="Sisesta kasutaja ID"
+            min="1"
+          />
+        </div>
+
+        <div class="transfer-actions">
+          <button class="btn-accept" (click)="initiateTransfer()" [disabled]="isLoading || !newOwnerId">
+            {{ isLoading ? 'Saadan...' : 'Saada üleandmise päring' }}
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="activeTransfer">
+        <div class="transfer-details">
+          <div class="detail-row">
+            <span class="detail-label">Üleandmise ID</span>
+            <span class="detail-value">#{{ activeTransfer.id }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Staatus</span>
+            <span class="badge badge-{{ activeTransfer.status | lowercase }}">{{ activeTransfer.status }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Vana omanik</span>
+            <span class="detail-value">Kasutaja #{{ activeTransfer.oldOwnerId }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Uus omanik</span>
+            <span class="detail-value">Kasutaja #{{ activeTransfer.newOwnerId }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Alustatud</span>
+            <span class="detail-value">{{ activeTransfer.startedAt | date:'medium' }}</span>
+          </div>
+          <div class="detail-row" *ngIf="activeTransfer.confirmedAt">
+            <span class="detail-label">Kinnitatud</span>
+            <span class="detail-value">{{ activeTransfer.confirmedAt | date:'medium' }}</span>
+          </div>
+        </div>
+
+        <div class="transfer-actions" *ngIf="isPending">
+          <button class="btn-accept" (click)="acceptTransfer()" [disabled]="isLoading">
+            {{ isLoading ? 'Töötlen...' : 'Kinnita' }}
+          </button>
+          <button class="btn-decline" (click)="declineTransfer()" [disabled]="isLoading">
+            {{ isLoading ? 'Töötlen...' : 'Lükka tagasi' }}
+          </button>
+          <button class="btn-cancel" (click)="cancelTransfer()" [disabled]="isLoading">
+            {{ isLoading ? 'Töötlen...' : 'Tühista päring' }}
+          </button>
+        </div>
+      </ng-container>
+
+      <p class="message success" *ngIf="successMessage">{{ successMessage }}</p>
+      <p class="message error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    </div>
+  </div>
+</div>
