@@ -14,7 +14,7 @@ export class Auth {
   constructor(private http: HttpClient) {}
 
   login(personalCode: string, password: string): Observable<User> {
-    const credentials = btoa(`${personalCode}:${password}`);
+    const credentials = btoa(`${personalCode.trim()}:${password.trim()}`);
     const headers = new HttpHeaders({
       Authorization: `Basic ${credentials}`,
     });
@@ -62,5 +62,13 @@ export class Auth {
   hasRole(role: RoleEnum): boolean {
     const user = this.getCurrentUser();
     return user?.roles?.some((r) => r.name === role) ?? false;
+  }
+
+  getCredentials(): string | null {
+    return localStorage.getItem('credentials');
+  }
+
+  getActiveRole(): string | null {
+    return localStorage.getItem('activeRole');
   }
 }
