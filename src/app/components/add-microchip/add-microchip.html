@@ -1,0 +1,72 @@
+<div class="form-page-wrapper">
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Lisa uus mikrokiip</h2>
+      <p>Palun täitke kohustuslikud väljad.</p>
+    </div>
+
+    <form [formGroup]="chipForm" (ngSubmit)="onSubmit()" class="nice-form">
+      <div
+        class="form-group"
+        [class.has-error]="
+          chipForm.get('microchipNumber')?.touched && chipForm.get('microchipNumber')?.invalid
+        "
+      >
+        <label for="microchipNumber">Mikrokiibi number (15 kohta)</label>
+        <input
+          id="microchipNumber"
+          formControlName="microchipNumber"
+          type="text"
+          placeholder="nt. 900123456789012"
+          maxlength="15"
+          [class.is-valid]="!!chipForm.get('microchipId')?.value"
+        />
+
+        <div
+          class="error-feedback"
+          *ngIf="
+            chipForm.get('microchipNumber')?.touched && chipForm.get('microchipNumber')?.invalid
+          "
+        >
+          <small *ngIf="chipForm.get('microchipNumber')?.errors?.['required']"
+            >Kiibi number on kohustuslik.</small
+          >
+          <small *ngIf="chipForm.get('microchipNumber')?.errors?.['pattern']"
+            >Number peab olema täpselt 15 numbrit.</small
+          >
+          <small class="error" *ngIf="chipForm.get('microchipNumber')?.hasError('alreadyInUse')">
+            ⚠️ See kiip on juba kasutusel!
+          </small>
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="chipForm.get('importer')?.touched && chipForm.get('importer')?.invalid"
+      >
+        <label for="importer">Maaletooja nimi</label>
+        <input
+          id="importer"
+          formControlName="importer"
+          type="text"
+          placeholder="nt. PetLogistics OÜ"
+        />
+
+        <div
+          class="error-feedback"
+          *ngIf="chipForm.get('importer')?.touched && chipForm.get('importer')?.invalid"
+        >
+          <small *ngIf="chipForm.get('importer')?.errors?.['required']"
+            >Maaletooja nimi on kohustuslik.</small
+          >
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="chipForm.invalid" class="submit-btn">
+          💾 Salvesta kiibi andmed
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
