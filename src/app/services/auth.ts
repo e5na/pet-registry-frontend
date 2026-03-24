@@ -63,12 +63,4 @@ export class Auth {
     const user = this.getCurrentUser();
     return user?.roles?.some((r) => r.name === role) ?? false;
   }
-
-  getCredentials(): string | null {
-    return localStorage.getItem('credentials');
-  }
-
-  getActiveRole(): string | null {
-    return localStorage.getItem('activeRole');
-  }
 }
