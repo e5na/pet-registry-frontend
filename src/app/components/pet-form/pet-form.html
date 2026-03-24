@@ -1,0 +1,161 @@
+<div class="content">
+  <div class="page-header">
+    <h2>🐾 Looma andmete sisestamine</h2>
+    <p>Palun täitke kõik vajalikud väljad.</p>
+  </div>
+
+  <div class="pet-container">
+    <form [formGroup]="petForm" (ngSubmit)="onSubmit()" class="grid-form">
+      <div
+        class="form-group full-width"
+        [class.has-error]="
+          petForm.get('microchipNumber')?.touched && petForm.get('microchipNumber')?.invalid
+        "
+      >
+        <label for="microchipNumber">Mikrokiibi number</label>
+        <input
+          id="microchipNumber"
+          formControlName="microchipNumber"
+          placeholder="15-kohaline kood"
+          maxlength="15"
+          [class.is-valid]="!!petForm.get('microchipId')?.value"
+        />
+        <div class="status-msg">
+          <small class="pending" *ngIf="petForm.get('microchipNumber')?.pending"
+            >⏳ Kontrollin unikaalsust...</small
+          >
+          <small class="error" *ngIf="petForm.get('microchipNumber')?.hasError('notFound')">
+            ❌ Sellise numbriga kiipi ei leitud süsteemist!
+          </small>
+          <small class="error" *ngIf="petForm.get('microchipNumber')?.hasError('alreadyInUse')">
+            ⚠️ See kiip on juba teise looma külge registreeritud!
+          </small>
+          <small
+            class="error"
+            *ngIf="
+              petForm.get('microchipNumber')?.touched &&
+              petForm.get('microchipNumber')?.hasError('pattern')
+            "
+            >Number peab olema täpselt 15 numbrit.</small
+          >
+          <small
+            class="error"
+            *ngIf="
+              petForm.get('microchipNumber')?.touched &&
+              petForm.get('microchipNumber')?.hasError('required')
+            "
+            >Kiibi number on kohustuslik.</small
+          >
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="petForm.get('name')?.touched && petForm.get('name')?.invalid"
+      >
+        <label for="petName">Looma nimi</label>
+        <input id="petName" formControlName="name" placeholder="nt. Muki" />
+        <div class="status-msg">
+          <small class="error" *ngIf="petForm.get('name')?.touched && petForm.get('name')?.invalid"
+            >Nimi on kohustuslik.</small
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Sugu</label>
+        <div class="radio-group">
+          <label *ngFor="let s of sex; let i = index">
+            <input type="radio" formControlName="sex" [value]="s" /> {{ s }}
+          </label>
+        </div>
+        <div class="status-msg">
+          <small class="error" *ngIf="petForm.get('sex')?.touched && petForm.get('sex')?.invalid"
+            >Sugu on valimata.</small
+          >
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="petForm.get('species')?.touched && petForm.get('species')?.invalid"
+      >
+        <label for="species">Liik</label>
+        <select id="species" formControlName="species">
+          <option value="" disabled selected>Vali liik</option>
+          <option *ngFor="let s of speciesList" [value]="s.id">{{ s.name }}</option>
+        </select>
+        <div class="status-msg">
+          <small
+            class="error"
+            *ngIf="petForm.get('species')?.touched && petForm.get('species')?.invalid"
+            >Liik on valimata.</small
+          >
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="petForm.get('birthDate')?.touched && petForm.get('birthDate')?.invalid"
+      >
+        <label for="birthDate">Sünniaeg</label>
+        <input id="birthDate" type="date" formControlName="birthDate" />
+        <div class="status-msg">
+          <small
+            class="error"
+            *ngIf="petForm.get('birthDate')?.touched && petForm.get('birthDate')?.invalid"
+            >Sünniaeg on kohustuslik.</small
+          >
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="petForm.get('breedId')?.touched && petForm.get('breedId')?.invalid"
+      >
+        <label for="breedId">Tõug</label>
+        <select id="breedId" formControlName="breedId">
+          <option value="" disabled selected>Vali tõug</option>
+          <option *ngFor="let b of breedsList" [value]="b.id">{{ b.name }}</option>
+        </select>
+        <div class="status-msg">
+          <small
+            class="error"
+            *ngIf="petForm.get('breedId')?.touched && petForm.get('breedId')?.invalid"
+            >Tõug on kohustuslik.</small
+          >
+        </div>
+      </div>
+
+      <div
+        class="form-group"
+        [class.has-error]="petForm.get('color')?.touched && petForm.get('color')?.invalid"
+      >
+        <label for="color">Värvus ja märgistus</label>
+        <input id="color" formControlName="color" placeholder="nt. Mustvalge" />
+        <div class="status-msg">
+          <small
+            class="error"
+            *ngIf="petForm.get('color')?.touched && petForm.get('color')?.invalid"
+            >Värvus on kohustuslik.</small
+          >
+        </div>
+      </div>
+
+      <!--  <div class="form-group full-width">
+        <label for="photo" class="file-label">Vali pilt</label>
+        <input
+          id="photo"
+          type="file"
+          (change)="onFileChange($event)"
+          accept="image/*"
+          class="file-input"
+        />
+      </div> -->
+
+      <button type="submit" [disabled]="petForm.invalid || petForm.pending" class="save-btn">
+        {{ petForm.pending ? '⌛ Palun oota...' : '💾 Salvesta looma andmed' }}
+      </button>
+    </form>
+  </div>
+</div>
