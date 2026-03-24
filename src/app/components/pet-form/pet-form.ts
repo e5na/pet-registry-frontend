@@ -134,10 +134,6 @@ export class PetFormComponent {
     }
   }
 
-  goBack(): void {
-    this.router.navigate(['/dashboard']);
-  }
-
   logout(): void {
     this.auth.logout();
     this.router.navigate(['/login']);
