@@ -4,6 +4,7 @@ import { DashboardHomeComponent } from './components/dashboard-home/dashboard-ho
 import { PetFormComponent } from './components/pet-form/pet-form';
 import { Login } from './components/login/login';
 import { MicrochipComponent } from './components/add-microchip/add-microchip';
+import { PetList } from './components/pets/pet-list/pet-list';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,6 +16,7 @@ export const routes: Routes = [
       { path: '', component: DashboardHomeComponent }, // Vaikimisi vaade
       { path: 'pets/new', component: PetFormComponent }, // Vormi vaade
       { path: 'microchips/new', component: MicrochipComponent },
+      { path: 'pets', component: PetList },
     ],
   },
 ];

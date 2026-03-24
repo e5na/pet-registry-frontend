@@ -51,4 +51,12 @@ export class PetService {
         catchError(() => of(null)), // Kui kiipi ei leita, tagastame nulli
       );
   }
+
+  reportPetAsLost(id: number): Observable<Pet> {
+    return this.http.patch<Pet>(`${this.API_URL}/pets/${id}/report-lost`, null);
+  }
+
+  reportPetAsDead(id: number): Observable<Pet> {
+    return this.http.patch<Pet>(`${this.API_URL}/pets/${id}/report-death`, null);
+  }
 }
