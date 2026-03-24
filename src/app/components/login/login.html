@@ -1,5 +1,5 @@
 <div class="login-container">
-  <h2>REMITK</h2>
+  <h2>REMITK Riiklik Lemmikloomaregister</h2>
   <h3>Logi sisse</h3>
 
   <div class="login-box">
@@ -16,5 +16,6 @@
     <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
 
     <button (click)="onLogin()">Logi sisse</button>
+    <button routerLink="/register">Registreeri</button>
   </div>
 </div>
