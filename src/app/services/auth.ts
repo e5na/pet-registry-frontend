@@ -24,6 +24,10 @@ export class Auth {
         this.currentUser = user;
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('credentials', credentials);
+        // Save first role as active role
+        if (user.roles && user.roles.length > 0) {
+          localStorage.setItem('activeRole', user.roles[0].name);
+        }
       }),
     );
   }
