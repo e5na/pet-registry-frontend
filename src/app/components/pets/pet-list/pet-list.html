@@ -1,0 +1,30 @@
+<div class="pet-list-container">
+  <nav class="navbar">
+    <h1>Riiklik Lemmikloomaregister</h1>
+    <button (click)="goBack()">← Tagasi</button>
+  </nav>
+
+  <div class="content">
+    <h2>Minu loomad</h2>
+
+    <div *ngIf="loading">Laadimine...</div>
+    <div *ngIf="error">{{ error }}</div>
+
+    <div class="pet-grid" *ngIf="!loading && !error">
+        <div class="pet-card" *ngFor="let pet of pets" (click)="togglePet(pet.id)">
+            <h3>{{ pet.name }}</h3>
+            <p>Liik: {{ pet.breed?.species?.name ?? 'Määramata' }}</p>
+
+            <div class="pet-details" *ngIf="expandedPetId === pet.id">
+            <p>Tõug: {{ pet.breed?.name ?? 'Määramata' }}</p>
+            <p>Sugu: {{ pet.sex }}</p>
+            <p>Sünniaeg: {{ pet.birthDate }}</p>
+            </div>
+        </div>
+
+        <div *ngIf="pets.length === 0">
+            Sul pole ühtegi looma registreeritud.
+        </div>
+    </div>
+  </div>
+</div>
